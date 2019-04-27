@@ -1,7 +1,5 @@
-﻿using System;
+﻿using BibliotecaImpacta.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BibliotecaImpacta.Controllers
@@ -11,7 +9,17 @@ namespace BibliotecaImpacta.Controllers
         // GET: Livro
         public ActionResult Index()
         {
-            return View();
+            List<Livro> Livros = new List<Livro>();
+
+            Livros.Add(new Livro()
+            {
+
+                Id=1,
+                Nome= "Meu primeiro livro"
+
+            });
+
+            return View(Livros);
         }
 
         // GET: Livro/Details/5
