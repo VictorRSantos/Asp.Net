@@ -1,25 +1,25 @@
-﻿using BibliotecaImpacta.Models;
+﻿using BibliotecaImpacta.DataContext;
+using BibliotecaImpacta.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace BibliotecaImpacta.Controllers
 {
     public class LivroController : Controller
     {
+
+        private BibliotecaDB db = new BibliotecaDB();
+
         // GET: Livro
         public ActionResult Index()
         {
-            List<Livro> Livros = new List<Livro>();
+            List<Livro> lLivros = new List<Livro>();
 
-            Livros.Add(new Livro()
-            {
-
-                Id=1,
-                Nome= "Meu primeiro livro"
-
-            });
-
-            return View(Livros);
+            lLivros = db.Livros.ToList();
+                
+            return View(lLivros);
         }
 
         // GET: Livro/Details/5
@@ -31,20 +31,60 @@ namespace BibliotecaImpacta.Controllers
         // GET: Livro/Create
         public ActionResult Create()
         {
+            List<Autor> lAutores = new List<Autor>();
+            lAutores = db.Autores.ToList();           
+
+
+            List<SelectListItem> listaAutores = lAutores.ConvertAll(a =>
+            {
+                return new SelectListItem()
+                {
+                    Text = a.Nome,
+                    Value = a.Id.ToString(),
+                    Selected = false
+                };
+            });
+
+            @ViewBag.Autores = listaAutores;
+
+
+            List<Categoria> lCategorias = new List<Categoria>();
+            lCategorias = db.Categorias.ToList();
+
+            List<SelectListItem> listaCategorias = lCategorias.ConvertAll(a =>
+            {
+                return new SelectListItem()
+                {
+                    Text = a.Nome,
+                    Value = a.Id.ToString(),
+                    Selected = false
+                };
+            });
+
+            @ViewBag.Categorias = listaCategorias;
+
             return View();
         }
 
         // POST: Livro/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Livro livro)
         {
             try
             {
+                if (ModelState.IsValid)
+                {
+                    db.Livros.Add(livro);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(livro);
+               
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+               
             }
-            catch
+            catch (Exception e)
             {
                 return View();
             }
