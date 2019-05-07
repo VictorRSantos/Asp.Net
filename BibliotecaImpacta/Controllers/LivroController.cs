@@ -1,4 +1,5 @@
 ﻿using BibliotecaImpacta.DataContext;
+using BibliotecaImpacta.Helpers;
 using BibliotecaImpacta.Models;
 using System;
 using System.Collections.Generic;
@@ -15,53 +16,26 @@ namespace BibliotecaImpacta.Controllers
         // GET: Livro
         public ActionResult Index()
         {
-            List<Livro> lLivros = new List<Livro>();
+            
 
-            lLivros = db.Livros.ToList();
-                
-            return View(lLivros);
+            return View();
         }
 
         // GET: Livro/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details()
         {
-            return View();
+            List<Livro> livro = db.Livros.ToList();
+
+            return View(livro);
         }
 
         // GET: Livro/Create
         public ActionResult Create()
         {
-            List<Autor> lAutores = new List<Autor>();
-            lAutores = db.Autores.ToList();           
+            
+            @ViewBag.Autores = RetornaSelectListItem.Autores();                       
 
-
-            List<SelectListItem> listaAutores = lAutores.ConvertAll(a =>
-            {
-                return new SelectListItem()
-                {
-                    Text = a.Nome,
-                    Value = a.Id.ToString(),
-                    Selected = false
-                };
-            });
-
-            @ViewBag.Autores = listaAutores;
-
-
-            List<Categoria> lCategorias = new List<Categoria>();
-            lCategorias = db.Categorias.ToList();
-
-            List<SelectListItem> listaCategorias = lCategorias.ConvertAll(a =>
-            {
-                return new SelectListItem()
-                {
-                    Text = a.Nome,
-                    Value = a.Id.ToString(),
-                    Selected = false
-                };
-            });
-
-            @ViewBag.Categorias = listaCategorias;
+            @ViewBag.Categorias = RetornaSelectListItem.Categorias();
 
             return View();
         }
@@ -78,6 +52,10 @@ namespace BibliotecaImpacta.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
+
+                @ViewBag.Autores = RetornaSelectListItem.Autores();
+                @ViewBag.Categorias = RetornaSelectListItem.Categorias();
+
                 return View(livro);
                
                 // TODO: Add insert logic here

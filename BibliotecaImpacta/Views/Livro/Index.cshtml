@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BibliotecaImpacta.Models.Livro>
+﻿
 
 @{
     ViewBag.Title = "Lista Livros";
@@ -6,33 +6,35 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Lista Livros</h2>
+<div class="row">
+    <div class="col s12 m6">
+        <div class="card light-blue darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">Cadastrar Livro</span>
+                <p>
+                    Cadastrar um novo livro
+                </p>
+            </div>
+            <div class="card-action">
+                @Html.ActionLink("Cadastrar", "Create")
+            </div>
+        </div>
+    </div>
+    <!--Listar Livros-->
+    <div class="col s12 m6">
+        <div class="card light-blue darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">Listar Livros</span>
+                <p>
+                    Visualize todos os livros cadastrados.
+                </p>
+            </div>
+            <div class="card-action">
+                @Html.ActionLink("Listar", "Details")
+            </div>
+        </div>
+    </div>
 
-<p>
-
-    @Html.ActionLink("Cadastrar Livro", "Create", null, new { @class = "waves-effect waves-light btn" })
 
 
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nome)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Detalhes", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Excluir", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+</div>
