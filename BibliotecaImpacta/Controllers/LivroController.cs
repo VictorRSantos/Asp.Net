@@ -3,7 +3,9 @@ using BibliotecaImpacta.Helpers;
 using BibliotecaImpacta.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 
 namespace BibliotecaImpacta.Controllers
@@ -69,20 +71,44 @@ namespace BibliotecaImpacta.Controllers
         }
 
         // GET: Livro/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                //Quando tentar acessar uma rota que está errada
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            }
+
+            Livro livro = db.Livros.Find(id);
+
+            @ViewBag.Autores = RetornaSelectListItem.Autores();
+            @ViewBag.Categorias = RetornaSelectListItem.Categorias();
+
+
+            return View(livro);
         }
 
         // POST: Livro/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Livro livro)
         {
             try
             {
                 // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    db.Entry(livro).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-                return RedirectToAction("Index");
+
+                @ViewBag.Autores = RetornaSelectListItem.Autores();
+                @ViewBag.Categorias = RetornaSelectListItem.Categorias();
+
+                return View(livro);
+
             }
             catch
             {
