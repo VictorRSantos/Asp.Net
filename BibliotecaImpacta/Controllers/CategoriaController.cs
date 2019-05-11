@@ -2,6 +2,7 @@
 using BibliotecaImpacta.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,7 +16,7 @@ namespace BibliotecaImpacta.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Autores.ToList());
+            return View();
         }
 
         public ActionResult Create()
@@ -48,6 +49,55 @@ namespace BibliotecaImpacta.Controllers
 
 
         }
+
+        public ActionResult Details()
+        {
+            List<Categoria> listaCategoria = db.Categorias.ToList();
+
+            return View(listaCategoria);
+
+
+        }
+
+       
+        public ActionResult Edit (int id)
+        {
+            Categoria categoria = db.Categorias.Find(id);
+            if (categoria == null)
+            {
+                return HttpNotFound();
+            }
+            return View(categoria);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Categoria categoria)
+        {
+            if (ModelState.IsValid)
+            {
+
+                db.Entry(categoria).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+
+            }
+
+            return View(categoria);
+
+        }
+
+
+        public ActionResult Delete(int id)
+        {
+            Categoria categoria = db.Categorias.Find(id);
+            db.Categorias.Attach(categoria);
+            db.Categorias.Remove(categoria);
+            db.SaveChanges();
+            return Content("Remoção realizada");
+
+        }
+        
 
     }
 }
