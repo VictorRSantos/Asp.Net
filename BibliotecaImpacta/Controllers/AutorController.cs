@@ -14,7 +14,7 @@ namespace BibliotecaImpacta.Controllers
         // GET: Autor
         public ActionResult Index()
         {
-            return View();
+            return View(db.Autores.ToList());
         }
 
         public ActionResult Create()
@@ -64,6 +64,28 @@ namespace BibliotecaImpacta.Controllers
 
             return View(autor);
 
+        }
+
+
+        public ActionResult Details()
+        {
+            List<Autor> lAutores = db.Autores.ToList();
+            return View(lAutores);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            //Vai pesquisar autor conforme com a id, esse id vai estar preenchido na nossa lista de autores.
+            Autor autor = db.Autores.Find(id);
+            //Vamos anexar autor
+            db.Autores.Attach(autor);
+            //Vamos remover autor
+            db.Autores.Remove(autor);
+            //Entity framework vai salvar essa informações no banco de dados
+            db.SaveChanges();
+            //Retornar um string
+            return Content("Autor foi removido com sucesso!");
         }
 
     }

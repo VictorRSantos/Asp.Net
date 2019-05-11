@@ -1,0 +1,85 @@
+﻿@model IEnumerable<BibliotecaImpacta.Models.Autor>
+
+@{
+    /**/
+
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lista de Autores</h2>
+
+<!--Vamos usar o Razor para falar que vai ser uma formulario-->
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    <table class="responsive-table striped bordered">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>Editar</th>
+            <th>Excluir</th>
+        </tr>
+               
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                
+                <td>
+                    <a class="btn-floating btn-large waves-effect waves-light red" data-id="@item.Id" href="@Url.Action("Edit", "Autor", new { Id = item.Id })">
+                    <i class="material-icons">mode_edit</i></a>
+                </td>
+                <td>
+                    <a id="btnExcluirAutor" class="btn-floating btn-large waves-effect waves-light red"  data-id="@item.Id"><i class="material-icons">delete</i></a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>Você deseja excluir esse Autor?</h4>
+        <p>Ao Clicar no botão Confirmar, você não poderá reverter a situação.</p>
+    </div>
+
+    <div class="modal-footer">
+        @Html.AntiForgeryToken()
+        <button id="btnConfirmarExclusao" type="button" class="modal-action modal-close waves-effect waves-green btn-flat">Confirmar</button>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    var autorId;
+    $('#btnExcluirAutor').click(function () {
+        autorId = $(this).attr("data-id");
+        $('#modal1').modal('open');
+
+    });
+
+    $("#btnConfirmarExclusao").click(function () {
+
+        var formulario = $('#__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', formulario).val();
+        console.log('autorId', autorId);
+        $.ajax({
+            url: 'Delete',
+            type: 'post',
+            data: {
+                __RequestVericationToken: token,
+                id: autorId
+            },
+            success: function (data) {
+                return window.location.reload();
+            }
+
+        });
+
+    });
+
+</script>

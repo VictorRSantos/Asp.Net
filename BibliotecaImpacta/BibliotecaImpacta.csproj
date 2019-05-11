@@ -229,6 +229,7 @@
     <Content Include="Views\Autor\Index.cshtml" />
     <Content Include="Views\Autor\Create.cshtml" />
     <Content Include="Views\Autor\Edit.cshtml" />
+    <Content Include="Views\Autor\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
