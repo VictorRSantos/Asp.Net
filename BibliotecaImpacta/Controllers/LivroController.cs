@@ -116,26 +116,19 @@ namespace BibliotecaImpacta.Controllers
             }
         }
 
-        // GET: Livro/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Livro/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ContentResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var livro = db.Livros.Find(id);
+            db.Livros.Attach(livro);
+            db.Livros.Remove(livro);
+            db.SaveChanges();
+
+            return Content("Livro excluido com sucesso");
+            
         }
+
+       
     }
 }
