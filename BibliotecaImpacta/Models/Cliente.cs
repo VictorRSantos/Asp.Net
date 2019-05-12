@@ -9,13 +9,17 @@ namespace BibliotecaImpacta.Models
 
         public virtual int Id { get; set; }
 
+       
+       [DisplayName("Nome Cliente")]
         public virtual string Nome { get; set; }
 
-        [Required]
-        [ValidacaoCPF]
+        
+        [DisplayName("CPF")]
+        [ValidacaoCPF(ErrorMessage = "CPF inválido")]
         public virtual string Cpf { get; set; }
 
-        [Required]
+        
+        [DisplayName("E-mail")]
         public virtual string Email { get; set; }
     }
 }

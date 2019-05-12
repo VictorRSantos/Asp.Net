@@ -10,13 +10,19 @@ namespace BibliotecaImpacta.Helpers
     public class ValidacaoCPF : ValidationAttribute, IClientValidatable
     {
 
+        public ValidacaoCPF()
+        {
+
+        }
+
         public override bool IsValid(object value)
         {
-            if (string.IsNullOrEmpty(value.ToString()))
+            if (value == null || string.IsNullOrEmpty(value.ToString()))
             {
                 return false;
 
             }
+
             bool valido = Valida.CPF(value.ToString());
             return valido;
         }
@@ -25,7 +31,7 @@ namespace BibliotecaImpacta.Helpers
         {
             yield return new ModelClientValidationRule{
                 ErrorMessage = FormatErrorMessage(null),
-                ValidationType = "Validacao CPF"
+                ValidationType = "validacaocpf"
             };
         }
     }

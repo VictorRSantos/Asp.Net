@@ -14,7 +14,7 @@ namespace BibliotecaImpacta.Controllers
         // GET: Autor
         public ActionResult Index()
         {
-            return View(db.Autores.ToList());
+            return View();
         }
 
         public ActionResult Create()

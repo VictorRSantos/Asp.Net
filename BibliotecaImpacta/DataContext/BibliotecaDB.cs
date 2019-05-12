@@ -18,7 +18,9 @@ namespace BibliotecaImpacta.DataContext
 
         public DbSet<Categoria> Categorias { get; set;}
 
+        public DbSet<Cliente> Clientes { get; set; }
 
+        public DbSet<Emprestimo> Emprestimos { get; set; }
         /*
          * Depois vamos em tools, gerenciamento pacotes Nuget e vamos abrir console.
          * Dentro do console vamos dgitar: enable-migrations, vai habilitar a migrations do nosso projeto
