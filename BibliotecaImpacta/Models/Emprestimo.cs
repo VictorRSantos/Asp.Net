@@ -19,10 +19,14 @@ namespace BibliotecaImpacta.Models
         public  virtual Livro Livro { get; set; }
 
         public virtual Cliente Cliente { get; set; }
-       
+        [DisplayName("Data Empréstimo")]
         public virtual DateTime DataEmprestimo { get; set; }
+
         [DisplayName("Data Devolução")]
         public virtual DateTime DataDevolucao { get; set; }
+
+        [DisplayName("Data de entrega do Livro")]
+        public virtual DateTime DataDeEntregaDoLivro { get; set; }
 
         [Required]
         public virtual int LivroId { get; set; }
@@ -30,6 +34,7 @@ namespace BibliotecaImpacta.Models
         [Required]
         public virtual int ClienteId { get; set; }
 
+        [DisplayName("Valor Pago")]
         public virtual decimal ValorPago { get; set; }
 
         [DisplayName("Livro devolvido")]       

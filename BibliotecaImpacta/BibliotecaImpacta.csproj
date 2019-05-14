@@ -250,6 +250,7 @@
     <Content Include="Views\Emprestimo\Index.cshtml" />
     <Content Include="Views\Emprestimo\Details.cshtml" />
     <Content Include="Views\Emprestimo\Edit.cshtml" />
+    <Content Include="Views\Shared\Extrato.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

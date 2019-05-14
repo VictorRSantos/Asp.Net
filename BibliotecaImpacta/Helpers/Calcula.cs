@@ -14,20 +14,20 @@ namespace BibliotecaImpacta.Helpers
             decimal valorEmprestimo = 1m;
 
 
-            if (DateTime.Compare(emprestimo.DataDevolucao, emprestimo.DataEmprestimo) > 0)
+            if (DateTime.Compare(emprestimo.DataDeEntregaDoLivro, emprestimo.DataDevolucao) > 0)
             {
 
-                valorEmprestimo += MultaAtrasoDevolicao(emprestimo.DataEmprestimo, emprestimo.DataDevolucao);
+                valorEmprestimo += MultaAtrasoDevolicao(emprestimo.DataDeEntregaDoLivro, emprestimo.DataDevolucao);
 
             }
             return valorEmprestimo;
 
         }
 
-        private static decimal MultaAtrasoDevolicao(DateTime dataEmprestimo, DateTime dataDevolucao)
+        private static decimal MultaAtrasoDevolicao(DateTime DataDeEntregaDoLivro, DateTime dataDevolucao)
         {
 
-            var numeroDias = (dataDevolucao - dataEmprestimo).TotalDays;
+            var numeroDias = (DataDeEntregaDoLivro - dataDevolucao).TotalDays;
 
             int valorPorDia = 2;
 

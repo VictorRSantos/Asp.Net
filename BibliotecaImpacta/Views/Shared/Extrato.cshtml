@@ -1,0 +1,47 @@
+﻿@model BibliotecaImpacta.Models.Emprestimo
+
+@{
+    ViewBag.Title = "Extrato";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Extrato do empréstimo</h2>
+
+<div>
+    <div class="row">
+        <div class="row">
+            <div class="input-field col s4">
+                @Html.DisplayNameFor(model => model.DataEmprestimo) :
+            </div>
+
+            <div class="input-field col s4">
+                @Html.DisplayFor(model => model.DataEmprestimo)
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="row">
+            <div class="input-field col s4">
+                @Html.DisplayNameFor(model => model.DataDevolucao) :
+            </div>
+
+            <div class="input-field col s4">
+                @Html.DisplayFor(model => model.DataDevolucao)
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="row">
+            <div class="input-field col s4">
+                @Html.DisplayNameFor(model => model.ValorPago) :
+            </div>
+
+            <div class="input-field col s4">
+                @Html.DisplayFor(model => model.ValorPago)
+            </div>
+        </div>
+    </div>
+</div>
