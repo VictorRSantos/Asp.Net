@@ -1,8 +1,10 @@
 ﻿using BibliotecaImpacta.DataContext;
+using BibliotecaImpacta.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -17,9 +19,9 @@ namespace BibliotecaImpacta.Models
         public  virtual Livro Livro { get; set; }
 
         public virtual Cliente Cliente { get; set; }
-
+       
         public virtual DateTime DataEmprestimo { get; set; }
-
+        [DisplayName("Data Devolução")]
         public virtual DateTime DataDevolucao { get; set; }
 
         [Required]
@@ -27,6 +29,8 @@ namespace BibliotecaImpacta.Models
 
         [Required]
         public virtual int ClienteId { get; set; }
+
+        public virtual decimal ValorPago { get; set; }
 
         [DisplayName("Livro devolvido")]       
         [DefaultValue(false)]
@@ -40,6 +44,23 @@ namespace BibliotecaImpacta.Models
                 db.Emprestimos.Add(emprestimo);
                 db.SaveChanges();
             }
+        }
+
+
+        public  void CadastrarDevolucao(Emprestimo emprestimo)
+        {
+
+
+            emprestimo.ValorPago = Calcula.ValoEmprestimoLivro(emprestimo);
+
+            Livro.AtualizaQuantidadeLivroDevolucao(emprestimo.LivroId);
+            emprestimo.LivroFoiDevolvido = true;
+            using(BibliotecaDB db = new BibliotecaDB())
+            {
+                db.Entry(emprestimo).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
         }
 
     }

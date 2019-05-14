@@ -51,5 +51,19 @@ namespace BibliotecaImpacta.Models
             }
         }
 
+        public static void AtualizaQuantidadeLivroDevolucao(int id)
+        {
+            using (BibliotecaDB db = new BibliotecaDB())
+            {
+                Livro livro = db.Livros.Where(l => l.Id.Equals(id)).FirstOrDefault();
+                if (livro != null)
+                {
+                    livro.Quantidade += 1;
+                    db.Entry(livro).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+        }
+
     }
 }

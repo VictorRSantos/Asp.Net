@@ -130,6 +130,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Calcula.cs" />
     <Compile Include="Helpers\RetornaSelectListItem.cs" />
     <Compile Include="Helpers\Valida.cs" />
     <Compile Include="Helpers\ValidacaoCPF.cs" />
@@ -248,6 +249,7 @@
     <Content Include="Views\Emprestimo\Create.cshtml" />
     <Content Include="Views\Emprestimo\Index.cshtml" />
     <Content Include="Views\Emprestimo\Details.cshtml" />
+    <Content Include="Views\Emprestimo\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
