@@ -10,7 +10,7 @@ namespace BibliotecaImpacta.Models
         public virtual int Id { get; set; }
 
        
-       [DisplayName("Nome Cliente")]
+        [DisplayName("Nome Cliente")]
         public virtual string Nome { get; set; }
 
         

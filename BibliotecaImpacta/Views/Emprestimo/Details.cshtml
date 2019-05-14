@@ -1,0 +1,66 @@
+﻿@model IEnumerable<BibliotecaImpacta.Models.Emprestimo>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table center-align">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Livro.Nome)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Cliente.Nome)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.DataEmprestimo)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.DataDevolucao)
+        </th>                
+        <th>Editar</th>
+    </tr>
+
+@foreach (var item in Model) {
+
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Livro.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cliente.Nome)
+        </th>
+        <td>
+            @item.DataEmprestimo.ToString("dd/MM/yyyy")
+        </td>
+        <td>
+            @if (DateTime.Compare(item.DataDevolucao, DateTime.Now) < 0)
+            {
+                <div class="card-panel red accent-3">@item.DataDevolucao.ToString("dd/MM/yyyy")</div>
+            }
+            else
+            {
+                <div class="card-panel blue accent-3">@item.DataDevolucao.ToString("dd/MM/yyyy")</div>
+            }
+        </td>  
+        <td>
+            <a class="btn btn-floating waves-effect waves-light red" href="@Url.Action("Edit","Emprestimo", new { id = item.Id})">
+                <i class="material-icons">mode_edit</i>
+            </a>
+        </td>
+        
+        
+
+    </tr>
+}
+
+</table>

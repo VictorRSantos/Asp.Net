@@ -1,0 +1,111 @@
+﻿@model IEnumerable<BibliotecaImpacta.Models.Cliente>
+
+@{
+    /**/
+
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Listar Clientes</h2>
+
+<p>
+    @Html.ActionLink("Cadastrar Cliente", "Create", null, new { @class = "waves-effect waves-light btn" })
+</p>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+
+    @Html.AntiForgeryToken()
+    <table class="responsive-table striped bordered">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cpf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>Editar</th>
+            <th>Excluir</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cpf)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+
+                    <a class="btn-floating btn-large waves-effect waves-light red" data-Id="@item.Id" href="@Url.Action("Edit", "Cliente", new { Id = item.Id })"><i class="material-icons">mode_edit</i></a>
+                </td>
+                <td>
+                    <a id="excluirCliente" class="btn-floating btn-large waves-effect waves-light red" data-Id="@item.Id"><i class="material-icons">delete</i></a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+
+}
+
+
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>Você deseja excluir esse cliente?</h4>
+        <p>Ao Clicar no botão Confirmar, você não poderá reverter a situação.</p>
+    </div>
+
+    <div class="modal-footer">
+        @Html.AntiForgeryToken()
+        <button id="btnConfirmarExclusao" type="button" class="modal-action modal-close waves-effect waves-green btn-flat">Confirmar</button>
+
+    </div>
+</div>
+
+<!--Requisição utilizando Ajax-->
+<script type="text/javascript">
+    var clienteId;
+
+    $('#excluirCliente').click(function () {
+        clienteId = $(this).attr('data-id');
+        $('.modal').modal('open');
+
+
+    });
+
+
+
+
+
+
+    $('#btnConfirmarExclusao').click(function () {
+
+        var formulario = $('__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', formulario).val();
+
+        $.ajax({
+            url:'Delete',
+            type:'Post',
+            data: {
+                __RequestVerificationToken: token,
+                id: clienteId
+
+            },
+            success: function () {
+                return window.location.reload();
+            }
+
+        });
+    });
+</script>

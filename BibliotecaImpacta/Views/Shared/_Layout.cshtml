@@ -31,11 +31,27 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function () {          
+
             $('select').formSelect();
             $('.modal').modal();    
 
+            
+
+            $.extend($.fn.pickdate.defaults, {
+                monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                monthsSort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                weekdaysFull: ['Domingo', 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sabado'],
+                weekdaysSort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+                today: 'hoje',
+                clear: 'limpar',
+                close: 'fechar',
+                formatSubmit: 'dd/mm/yyyy'
+
+            });
+            $('.data').pickdate({ format: 'dd/mm/yyyy' });
           
         });      
     </script>

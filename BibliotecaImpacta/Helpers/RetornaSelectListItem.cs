@@ -56,6 +56,43 @@ namespace BibliotecaImpacta.Helpers
         }
 
 
+        public static List<SelectListItem> LivrosNaoEmprestados (int id = 0)
+        {
+            var livros = db.Livros.Where(l => l.Quantidade > 0).ToList();
+
+            List<SelectListItem> item = livros.ConvertAll(l =>
+            {
+                return new SelectListItem()
+                {
+                    Text = l.Nome,
+                    Value = l.Id.ToString(),
+                    Selected = (l.Id == id)
+                };
+
+            });
+
+            return item;
+
+        }
+
+
+        public static List<SelectListItem> Clientes (int id = 0)
+        {
+            var clientes = db.Clientes.ToList();
+            List<SelectListItem> item = clientes.ConvertAll(c =>
+            {
+                return new SelectListItem()
+                {
+
+                    Text = c.Nome,
+                    Value = c.Id.ToString(),
+                    Selected = (c.Id == id)                    
+
+                };
+
+            });
+            return item;
+        }
 
     }
 }
